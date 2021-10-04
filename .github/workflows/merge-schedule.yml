@@ -15,6 +15,7 @@ jobs:
       - uses: gr2m/merge-schedule-action@v1
         with:
           merge_method: merge
-          time_zone: "Europe/Madrid"
+          # /schedule 2021-10-04T10:30:00+02:00
+          # time_zone: "Europe/Madrid"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
