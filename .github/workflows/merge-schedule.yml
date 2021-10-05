@@ -4,12 +4,17 @@ on:
     types:
       - opened
       - edited
+      - synchronize
   schedule:
-    - cron: 26 7 * * *
+    - cron: 1 * * * *
+
 jobs:
   merge_schedule:
     runs-on: ubuntu-latest
     steps:
-      - uses: gr2m/merge-schedule-action@v1.x
+      - uses: gr2m/merge-schedule-action
+        with:
+          merge_method: merge
+          time_zone: "Europe/Madrid"
         env:
-          GITHUB_TOKEN: $
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
