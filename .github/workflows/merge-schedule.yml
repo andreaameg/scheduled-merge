@@ -1,5 +1,3 @@
-name: Automerge
-
 name: Merge Schedule
 on:
   pull_request:
@@ -7,7 +5,7 @@ on:
       - opened
       - edited
   schedule:
-    - cron: 25 9 * * *
+    - cron: 26 7 * * *
 jobs:
   merge_schedule:
     runs-on: ubuntu-latest
