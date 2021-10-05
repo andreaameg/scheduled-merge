@@ -1,21 +1,30 @@
-name: Merge Schedule
+name: Automerge
+
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
+  workflow_dispatch:
   schedule:
-    - cron: 0 * * * *
+    - cron: '0 0 * * *'
+
+env:
+  MY_REPO: https://andreaameg:${{secrets.GITHUB_TOKEN}}@github.com/andreaameg/scheduled-merge.git
+
+  MY_BRANCH: prueba-ocho
+
+  MASTER_REPO: https://github.com/andreaameg/scheduled-merge/tree/master.git
+
+  MASTER_BRANCH: master
 
 jobs:
-  merge_schedule:
+  merge:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: gr2m/merge-schedule-action@v1
-        with:
-          merge_method: merge
-          # /schedule 2021-10-04T10:30:00+02:00
-          # time_zone: "Europe/Madrid"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Merge with master
+      run: |
+        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH}} tmp
+        cd tmp
+        git config user.name "Automerge Bot"
+        git config user.email "bot@example.com"
+        git config pull.rebase false
+        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH}}
+        git push
